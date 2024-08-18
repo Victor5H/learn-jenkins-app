@@ -19,6 +19,18 @@ pipeline {
                 '''
             }
         }
+        stage("Test"){
+            steps{
+                sh '''
+                if [ -e build/index.html ]
+                    then echo "present"
+                else
+                    echo "not present"
+                fi
+                npm test
+                '''
+            }
+        }
         
     }
 }
