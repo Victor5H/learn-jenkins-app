@@ -38,7 +38,6 @@ pipeline {
                 docker{
                     image 'mcr.microsoft.com/playwright:v1.46.0-jammy'
                     reuseNode true
-                    agrs '-u root:root'
                 }
             }
             steps{
