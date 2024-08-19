@@ -1,9 +1,14 @@
 pipeline {
     agent any
     stages {
-        /*
+        
         stage('build') {
-            
+            agent{
+                docker{
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
             steps {
                 sh '''
                 ls -la
@@ -14,10 +19,46 @@ pipeline {
                 '''
             }
         }
-        */
         stage('tests'){
             parallel{
                 stage("Test"){
+                    agent{
+                        docker{
+                            image 'node:18-alpine'
+                            reuseNode true
+                        }
+                    }
+                    steps{
+                        sh '''
+                        if [ -e build/index.html ]
+                            then echo "present"
+                        else
+                            echo "not present"
+                        fi
+                        npm test
+                        '''
+                    }
+                }
+                stage("E2E"){
+                    agent{
+                        docker{
+                            image 'mcr.microsoft.com/playwright:v1.46.0-jammy'
+                            reuseNode true
+                        }
+                    }
+                    steps{
+                        sh '''
+                        npm install serve
+                        node_modules/.bin/serve -s build &
+                        sleep 10 
+                        npx playwright install chromium
+                        npx playwright test --reporter=html
+                        '''
+                    }
+                }
+            }
+        }
+        stage("Deploy"){
             agent{
                 docker{
                     image 'node:18-alpine'
@@ -26,42 +67,11 @@ pipeline {
             }
             steps{
                 sh '''
-                if [ -e build/index.html ]
-                    then echo "present"
-                else
-                    echo "not present"
-                fi
-                npm test
+                npm install netlify-cli -g
+                netlify --version
                 '''
             }
         }
-        stage("E2E"){
-            agent{
-                docker{
-                    image 'mcr.microsoft.com/playwright:v1.46.0-jammy'
-                    reuseNode true
-                }
-            }
-            steps{
-                sh '''
-                npm install serve
-                node_modules/.bin/serve -s build &
-                sleep 10 
-                npx playwright install chromium
-                npx playwright test --reporter=html
-                '''
-            }
-        }
-            }
-
-        }
-        
-
-
     }
-    post{
-        always{
-            junit 'jest-results/junit.xml'
-        }
-    }
+
 }
