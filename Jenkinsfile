@@ -79,7 +79,7 @@ pipeline {
             steps{
                 sh '''
                 npm install netlify-cli
-                RUN apk add --no-cache python3 py3-pip
+                apk add --no-cache python3 py3-pip
                 node_modules/.bin/netlify --version
                 echo "Deploying to production: $NETLIFY_SITE_ID"
                 node_modules/.bin/netlify status
