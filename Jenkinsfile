@@ -46,7 +46,7 @@ pipeline {
                         '''
                     }
                 }
-                /*
+                
                 stage("E2E"){
                     agent{
                         docker{
@@ -62,11 +62,12 @@ pipeline {
                         sleep 10 
                         npx playwright install chromium
                         npx playwright test --reporter=html
+                        npm install sharp
                         '''
                     }
                     
                 }
-                */
+                
             }
         }
         stage("Deploy"){
