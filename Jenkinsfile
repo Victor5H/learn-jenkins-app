@@ -73,7 +73,26 @@ pipeline {
                 
             }
         }
-        stage("Deploy"){
+        stage("Deploy staging"){
+            agent{
+                docker{
+                    image 'iahs5/node-18-py3:1'
+                    reuseNode true
+                }
+            }
+            steps{
+                sh '''
+                npm install netlify-cli
+                node_modules/.bin/netlify --version
+                echo "Deploying to production: $NETLIFY_SITE_ID"
+                node_modules/.bin/netlify status
+                node_modules/.bin/netlify deploy --dir=build
+                '''
+                // by removing --prod from deploy command, netlify will automatically deploy the code in a different staging env
+            }
+        }
+
+        stage("Deploy prod"){
             agent{
                 docker{
                     image 'iahs5/node-18-py3:1'
