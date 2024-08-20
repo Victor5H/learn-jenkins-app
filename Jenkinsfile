@@ -72,7 +72,7 @@ pipeline {
         stage("Deploy"){
             agent{
                 docker{
-                    image 'node:18-alpine'
+                    image 'iahs5/node-18-py3:1'
                     reuseNode true
                 }
             }
