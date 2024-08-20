@@ -35,6 +35,7 @@ pipeline {
                             reuseNode true
                         }
                     }
+                    
                     steps{
                         sh '''
                         if [ -e build/index.html ]
