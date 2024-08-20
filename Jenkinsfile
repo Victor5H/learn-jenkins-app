@@ -64,8 +64,9 @@ pipeline {
                         npx playwright test --reporter=html
                         '''
                     }
-                    */
+                    
                 }
+                */
             }
         }
         stage("Deploy"){
