@@ -91,6 +91,14 @@ pipeline {
                 // by removing --prod from deploy command, netlify will automatically deploy the code in a different staging env
             }
         }
+        stage("approval"){
+            steps{
+                timeout(time: 15, unit: 'MINUTES') {
+                    input message: 'ready', ok: 'yes sure'
+                }
+                
+            }
+        }
 
         stage("Deploy prod"){
             agent{
