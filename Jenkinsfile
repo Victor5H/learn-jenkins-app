@@ -82,11 +82,13 @@ pipeline {
             }
             steps{
                 sh '''
-                npm install netlify-cli
+                npm install sharp
+                npm install netlify-cli node-jq 
                 node_modules/.bin/netlify --version
                 echo "Deploying to production: $NETLIFY_SITE_ID"
                 node_modules/.bin/netlify status
-                node_modules/.bin/netlify deploy --dir=build
+                node_modules/.bin/netlify deploy --dir=build --json > deploy_out.json
+                node_modules/.bin/node-jq -r '.deploy_url' deploy_out.json
                 '''
                 // by removing --prod from deploy command, netlify will automatically deploy the code in a different staging env
             }
