@@ -5,6 +5,7 @@ pipeline {
         //necessary as netlify checks for this site id with this var name, and gets to know about which site we want to deploy
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
         //necessary as netlify checks for this token with this var name.
+        REACT_APP_VERSION = '1.1.0'
     }
     stages {
         /*
