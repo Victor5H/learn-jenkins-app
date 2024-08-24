@@ -8,7 +8,7 @@ pipeline {
         REACT_APP_VERSION = '1.1.0'
     }
     stages {
-        /*
+        
         stage('build') {
             agent{
                 docker{
@@ -26,7 +26,7 @@ pipeline {
                 '''
             }
         }
-        */
+        /*
         stage('tests'){
             parallel{
                 stage("Test"){
@@ -48,7 +48,7 @@ pipeline {
                         '''
                     }
                 }
-                /*
+                
                 
                 stage("E2E"){
                     agent{
