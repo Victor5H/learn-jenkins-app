@@ -8,6 +8,7 @@ pipeline {
         REACT_APP_VERSION = '1.1.0'
     }
     stages {
+         /*
         
         stage('build') {
             agent{
@@ -26,7 +27,7 @@ pipeline {
                 '''
             }
         }
-        /*
+       
         stage('tests'){
             parallel{
                 stage("Test"){
