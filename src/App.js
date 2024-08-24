@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import * as dotenv from 'dotenv';
 
 function App() {
   return (
